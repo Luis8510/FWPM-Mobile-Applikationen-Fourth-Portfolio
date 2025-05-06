@@ -1,7 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fourthportfolioexam/movie_item.dart';
 import 'package:http/http.dart' as http;
+
+import 'movie.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,6 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: const MyScreen(),
@@ -61,6 +65,7 @@ class _MyHttpWidgetState extends State<MyHttpWidget> {
 
     if (response.statusCode == 200) {
       final movies = jsonDecode(response.body) as List;
+      print(movies[0]);
       returnValue = List.generate(
         movies.length,
         (index) => Movie.fromJson(movies[index] as Map<String, dynamic>),
@@ -75,29 +80,15 @@ class _MyHttpWidgetState extends State<MyHttpWidget> {
       return const Center(child: Text("No movies found"));
     }
 
-    return ListView.builder(
-      itemCount: movies.length,
-      prototypeItem: ListTile(
-        title: Text(movies.first.title),
-        subtitle: Text(movies.first.director),
+    return Scaffold(
+      backgroundColor: Colors.grey[600],
+      body: ListView.builder(
+        itemCount: movies.length,
+        prototypeItem: MovieItem(movie: movies.first),
+        itemBuilder: (context, index) {
+          return MovieItem(movie: movies[index]);
+        },
       ),
-      itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(movies[index].title),
-          subtitle: Text(movies[index].director),
-        );
-      },
     );
-  }
-}
-
-class Movie {
-  final String title;
-  final String director;
-
-  Movie({required this.title, required this.director});
-
-  factory Movie.fromJson(Map<String, dynamic> json) {
-    return Movie(title: json['Title'], director: json['Director']);
   }
 }
