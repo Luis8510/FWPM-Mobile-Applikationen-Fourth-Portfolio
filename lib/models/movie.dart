@@ -16,9 +16,7 @@ class Movie {
   final String metascore;
   final String imdbRating;
   final String imdbVotes;
-  final String imdbID;
   final String type;
-  final String response;
   final List<String> images;
 
   const Movie({
@@ -39,9 +37,7 @@ class Movie {
     required this.metascore,
     required this.imdbRating,
     required this.imdbVotes,
-    required this.imdbID,
     required this.type,
-    required this.response,
     required this.images,
   });
 
@@ -64,9 +60,7 @@ class Movie {
       metascore: json['Metascore'] as String? ?? '-',
       imdbRating: json['imdbRating'] as String? ?? '-',
       imdbVotes: json['imdbVotes'] as String? ?? '-',
-      imdbID: json['imdbID'] as String? ?? '-',
       type: json['Type'] as String? ?? '-',
-      response: json['Response'] as String? ?? '-',
       images: (json['Images'] as List?)?.map((e) => e as String).toList() ??
           const [],
     );

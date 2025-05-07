@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:fourthportfolioexam/movie_item.dart';
+import 'package:fourthportfolioexam/widgets/movie_item.dart';
 import 'package:http/http.dart' as http;
 
-import 'movie.dart';
+import 'models/movie.dart';
 
 void main() {
   runApp(const MyApp());
@@ -65,7 +65,6 @@ class _MyHttpWidgetState extends State<MyHttpWidget> {
 
     if (response.statusCode == 200) {
       final movies = jsonDecode(response.body) as List;
-      print(movies[0]);
       returnValue = List.generate(
         movies.length,
         (index) => Movie.fromJson(movies[index] as Map<String, dynamic>),
@@ -77,7 +76,26 @@ class _MyHttpWidgetState extends State<MyHttpWidget> {
   @override
   Widget build(BuildContext context) {
     if (movies.isEmpty) {
-      return const Center(child: Text("No movies found"));
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircularProgressIndicator(
+              color: Colors.blue[900],
+              strokeWidth: 3,
+            ),
+            const SizedBox(height: 20),
+            const Text(
+              'Loading movies...',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      );
     }
 
     return Scaffold(
@@ -86,7 +104,9 @@ class _MyHttpWidgetState extends State<MyHttpWidget> {
         itemCount: movies.length,
         prototypeItem: MovieItem(movie: movies.first),
         itemBuilder: (context, index) {
-          return MovieItem(movie: movies[index]);
+          return MovieItem(
+            movie: movies[index],
+          );
         },
       ),
     );
