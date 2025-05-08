@@ -30,6 +30,8 @@ class CustomImage extends StatelessWidget {
           }
           return Container(
             color: Colors.grey.shade300,
+            width: width,
+            height: height,
             child: Center(
               child: CircularProgressIndicator(
                 value: loadingProgress.expectedTotalBytes != null

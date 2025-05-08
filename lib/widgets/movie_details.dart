@@ -35,9 +35,11 @@ class MovieDetails extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: Text(movie.title,
-                      style: const TextStyle(
-                          fontSize: 24, fontWeight: FontWeight.bold)),
+                  child: Text(
+                    movie.title,
+                    style: const TextStyle(
+                        fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
                 ),
                 Container(
                   padding:
